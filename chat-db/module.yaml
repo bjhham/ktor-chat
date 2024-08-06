@@ -1,0 +1,9 @@
+product:
+    type: lib
+    platforms: [jvm, android]
+
+dependencies:
+    - ../chat-core
+    - $libs.exposed
+    - $libs.exposed.datetime
+    - $libs.h2

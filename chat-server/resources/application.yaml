@@ -1,0 +1,20 @@
+ktor:
+    application:
+        modules:
+            - io.ktor.chat.ApplicationKt.rootModule
+            - io.ktor.chat.DatabasesKt.databaseModule
+            - io.ktor.chat.RepositoriesKt.repositoriesModule
+            - io.ktor.chat.AuthenticationKt.authModule
+            - io.ktor.chat.UsersKt.usersModule
+            - io.ktor.chat.MessagesKt.messagesModule
+            - io.ktor.chat.RoomsKt.roomsModule
+    deployment:
+        port: 8080
+
+jwt:
+    audience: audience
+    issuer: issuer
+    realm: realm
+
+security:
+    secret: S3crE4_P@55w0Rd
