@@ -14,7 +14,7 @@ import org.koin.core.qualifier.named
 import org.koin.ktor.ext.inject
 
 fun Application.authModule() {
-    val users by inject<Repository<User, Long>>(named("users"))
+    val users by inject<Repository<FullUser, Long>>(named("users"))
     val hashAlgorithm by inject<Algorithm>(named("hash"))
     val audience = property("jwt.audience")
     val issuer = property("jwt.issuer")
@@ -38,26 +38,26 @@ fun Application.authModule() {
     routing {
         route("/auth") {
             post("login") {
-                val credential = call.receive<Credential>()
-                val user: User? = users.list().find { it.email == credential.email }
+                val credential = call.receive<LoginRequest>()
+                val user: FullUser? = users.list().find { it.email == credential.email }
                 if (user != null && user.password == hashAlgorithm.hash(credential.password)) {
                     val token: String = JWT.create()
                         .withAudience(audience)
                         .withIssuer(issuer)
                         .withClaim("id", user.id.toString())
                         .sign(hashAlgorithm)
-                    call.respond(HttpStatusCode.OK, token)
+                    call.respond(HttpStatusCode.OK, AuthenticationResponse(token, user))
                 } else {
                     call.respond(HttpStatusCode.Unauthorized, "Invalid credentials")
                 }
             }
             post("register") {
-                val registration = call.receive<Registration>()
-                val existingUser: User? = users.list().find { it.name == registration.email }
+                val registration = call.receive<RegistrationRequest>()
+                val existingUser: FullUser? = users.list().find { it.name == registration.email }
                 if (existingUser != null) {
                     call.respond(HttpStatusCode.BadRequest, "User already exists")
                 } else {
-                    val newUser = User(
+                    val newUser = FullUser(
                         registration.name,
                         registration.email,
                         hashAlgorithm.hash(registration.password)
@@ -71,10 +71,4 @@ fun Application.authModule() {
 }
 
 @Serializable
-data class Credential(val email: String, val password: String)
-
-@Serializable
-data class Registration(val name: String, val email: String, val password: String)
-
-@Serializable
-data class ChatPrincipal(val user: User): Principal
+data class ChatPrincipal(val user: FullUser): Principal

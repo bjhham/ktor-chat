@@ -2,6 +2,7 @@ ktor:
     application:
         modules:
             - io.ktor.chat.ApplicationKt.rootModule
+            - io.ktor.chat.HealthCheckKt.healthCheckModule
             - io.ktor.chat.DatabasesKt.databaseModule
             - io.ktor.chat.RepositoriesKt.repositoriesModule
             - io.ktor.chat.AuthenticationKt.authModule
@@ -18,3 +19,10 @@ jwt:
 
 security:
     secret: S3crE4_P@55w0Rd
+
+database:
+    main:
+        url: jdbc:h2:file:./db
+        user: root
+        driver: org.h2.Driver
+        password: ""

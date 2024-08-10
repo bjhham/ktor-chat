@@ -1,0 +1,27 @@
+product:
+    type: lib
+    platforms: [jvm, android]
+
+dependencies:
+  - ../chat-core: exported
+  - $compose.foundation: exported
+  - $compose.material3: exported
+  - $compose.uiTooling: exported
+  - $libs.androidx.lifecycle
+  - $libs.kotlinx.serialization.json
+  - $libs.kotlinx.datetime
+  - $libs.ktor.client.core
+  - $libs.ktor.client.cio
+  - $libs.ktor.client.content.negotiation
+  - $libs.ktor.json
+  - $libs.logback.classic
+
+dependencies@android:
+  - androidx.activity:activity-compose:1.7.2: exported
+  - androidx.appcompat:appcompat:1.6.1: exported
+
+settings:
+  compose:
+    enabled: true
+  kotlin:
+    serialization: json

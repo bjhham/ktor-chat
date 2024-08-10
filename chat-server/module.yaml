@@ -10,12 +10,13 @@ dependencies:
     - $libs.ktor.server.cio
     - $libs.ktor.server.auth
     - $libs.ktor.server.auth.jwt
-    - $libs.ktor.server.json
+    - $libs.ktor.json
     - $libs.ktor.server.sse
     - $libs.ktor.server.config.yaml
     - $libs.ktor.server.content.negotiation
     - $libs.kotlinx.serialization.json
     - $libs.kotlinx.datetime
+    - $libs.kotlinx.coroutines
     - $libs.logback.classic
     - $libs.h2
     - $libs.exposed

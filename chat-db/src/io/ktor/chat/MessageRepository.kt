@@ -9,10 +9,9 @@ class MessageRepository(database: Database): ExposedRepository<Message, Long, Me
         Message(
             author = User(
                 name = row[Users.name],
-                email = row[Users.email],
-                password = "###",
                 id = row[Users.id].value,
             ),
+            room = row[Messages.room],
             created = row[Messages.created],
             text = row[Messages.text],
             id = row[Messages.id].value,
@@ -24,6 +23,7 @@ class MessageRepository(database: Database): ExposedRepository<Message, Long, Me
 
     override fun assignColumns(e: Message): Messages.(UpdateBuilder<*>) -> Unit = {
         it[author] = e.author.id
+        it[room] = e.room
         it[created] = e.created
         it[text] = e.text
         it[modified] = e.modified

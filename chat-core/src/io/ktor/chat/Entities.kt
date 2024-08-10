@@ -8,12 +8,29 @@ interface Identifiable<ID> {
 }
 
 @Serializable
-data class User(
-    val name: String,
+sealed interface Named: Identifiable<Long> {
+    val name: String
+}
+
+typealias User = Named
+
+fun User(id: Long, name: String) =
+    SimplifiedUser(id, name)
+
+@Serializable
+data class FullUser(
+    override val name: String,
     val email: String,
     val password: String,
     override val id: Long = 0,
-): Identifiable<Long>
+): Named
+
+
+@Serializable
+data class SimplifiedUser(
+    override val id: Long,
+    override val name: String
+): Named
 
 @Serializable
 data class Room(
@@ -24,6 +41,7 @@ data class Room(
 @Serializable
 data class Message(
     val author: User,
+    val room: Long,
     val created: Instant,
     val text: String,
     override val id: Long = 0,

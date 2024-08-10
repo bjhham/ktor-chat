@@ -9,7 +9,7 @@ import org.koin.core.qualifier.named
 import org.koin.ktor.ext.inject
 
 fun Application.usersModule() {
-    val users by inject<Repository<User, Long>>(named("users"))
+    val users by inject<Repository<FullUser, Long>>(named("users"))
 
     routing {
         authenticate {
@@ -23,6 +23,3 @@ fun Application.usersModule() {
         }
     }
 }
-
-@Serializable
-data class SimplifiedUser(val id: Long, val name: String)

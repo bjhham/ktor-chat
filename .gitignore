@@ -34,3 +34,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Application artifacts ###
+chat-server/db
+local.properties

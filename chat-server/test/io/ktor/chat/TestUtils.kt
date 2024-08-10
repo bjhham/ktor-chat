@@ -7,6 +7,7 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.config.yaml.*
 import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.sse.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
@@ -26,7 +27,7 @@ fun testApplicationWith(
     test()
 }
 
-val mockUser = User("Joe", "joey.bloggs@mail.com", "pwd")
+val mockUser = FullUser("Joe", "joey.bloggs@mail.com", "pwd")
 val mockAuthorization = with(mockUser) { "Basic ${"$email:$password".encodeBase64()}" }
 
 fun Application.mockAuth() {
@@ -39,10 +40,25 @@ fun Application.mockAuth() {
     }
 }
 
+fun HttpClient.configureForEvents() =
+    config {
+        install(SSE) {
+            showCommentEvents()
+            showRetryEvents()
+        }
+        install(DefaultRequest) {
+            header(HttpHeaders.Authorization, mockAuthorization)
+        }
+    }
+
 fun HttpClient.configureForTest() =
     config {
         install(ContentNegotiation) {
             json()
+        }
+        install(SSE) {
+            showCommentEvents()
+            showRetryEvents()
         }
         install(DefaultRequest) {
             contentType(ContentType.Application.Json)
@@ -57,3 +73,4 @@ fun ApplicationTestBuilder.configureYaml(yamlFile: String?) {
         config = YamlConfig(yamlFile)!!
     }
 }
+

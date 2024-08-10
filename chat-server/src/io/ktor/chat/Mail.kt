@@ -19,12 +19,12 @@ fun Logger.logMailer() =
     }
 
 class MailingUserRepository(
-    private val delegate: Repository<User, Long>,
+    private val delegate: Repository<FullUser, Long>,
     private val mailer: Mailer,
     private val algorithm: Algorithm,
-): Repository<User, Long> by delegate {
+): Repository<FullUser, Long> by delegate {
 
-    override suspend fun create(e: User): User {
+    override suspend fun create(e: FullUser): FullUser {
         return delegate.create(e).also { user ->
             with(user) {
                 mailer.sendEmail(

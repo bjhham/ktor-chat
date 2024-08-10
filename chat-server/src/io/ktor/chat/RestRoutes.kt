@@ -5,10 +5,14 @@ import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.util.*
 
-inline fun <reified E: Identifiable<Long>> Routing.restMethods(repository: Repository<E, Long>) {
+inline fun <reified E: Identifiable<Long>> Routing.restMethods(
+    repository: Repository<E, Long>
+) {
     get {
-        call.respond(repository.list())
+        val query = MapQuery(call.queryParameters.toMap())
+        call.respond(repository.list(query))
     }
     post {
         call.respond(HttpStatusCode.Created, repository.create(call.receive()))

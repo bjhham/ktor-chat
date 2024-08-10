@@ -15,15 +15,15 @@ fun Application.repositoriesModule() {
     koin {
         modules(module {
             // Note: qualifier is required because generics don't work with Koin
-            single<Repository<User, Long>>(named("users")) {
+            single<Repository<FullUser, Long>>(named("users")) {
                 MailingUserRepository(
                     delegate = UserRepository(database),
                     mailer = environment.log.logMailer(),
                     algorithm = hmac256,
                 )
             }
-            single<Repository<Message, Long>>(named("messages")) {
-                MessageRepository(database)
+            single<ObservableRepository<Message, Long>>(named("messages")) {
+                MessageRepository(database).observable()
             }
             single<Repository<Room, Long>>(named("rooms")) {
                 RoomRepository(database)

@@ -8,10 +8,10 @@ import org.koin.ktor.plugin.koin
 
 fun Application.databaseModule() {
     val database = Database.connect(
-        url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
-        user = "root",
-        driver = "org.h2.Driver",
-        password = ""
+        url = property("database.main.url"),
+        user = property("database.main.user"),
+        driver = property("database.main.driver"),
+        password = property("database.main.password")
     ).also { db ->
         transaction(db) {
             SchemaUtils.create(Users, Rooms, Messages)

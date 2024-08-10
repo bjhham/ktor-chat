@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        
+        {
+            "name": "Desktop App",
+            "type": "gradle",
+            "workingDir": "$PROJECT_DIR$",
+            "tasks": ["jvmRun"],
+            "args": ["-DmainClass=MainKt", "--quiet", "-p", "$PROJECT_DIR$/chat-app-desktop"],
+            "initScripts": {
+                "flmapper": "ext.mapPath = { path -> path }"
+            }
+        },
+        {
+            "name": "Server",
+            "type": "gradle",
+            "workingDir": "$PROJECT_DIR$",
+            "tasks": ["jvmRun"],
+            "args": ["-DmainClass=io.ktor.chat.ApplicationKt", "--quiet", "-p", "$PROJECT_DIR$/chat-server"],
+            "initScripts": {
+                "flmapper": "ext.mapPath = { path -> path }"
+            }
+        }
+    ]
+}

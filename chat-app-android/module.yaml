@@ -1,0 +1,7 @@
+product: android/app
+
+dependencies:
+    - ../chat-app-common
+
+settings:
+  compose: enabled

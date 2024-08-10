@@ -17,6 +17,7 @@ object Rooms : LongIdTable() {
 object Messages : LongIdTable() {
     val author = reference("author", Users)
     val created = timestamp("created")
+    val room = long("room").references(Rooms.id)
     val text = text("text")
     val modified = timestamp("modified").nullable()
 }
