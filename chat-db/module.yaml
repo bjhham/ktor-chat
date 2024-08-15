@@ -7,3 +7,7 @@ dependencies:
     - $libs.exposed
     - $libs.exposed.datetime
     - $libs.h2
+
+test-dependencies:
+    - $libs.kotlinx.coroutines.test
+    - $libs.exposed.jdbc

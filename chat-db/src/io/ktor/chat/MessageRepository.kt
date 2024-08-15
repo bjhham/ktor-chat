@@ -1,10 +1,15 @@
 package io.ktor.chat
 
+import org.jetbrains.exposed.sql.ColumnSet
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 
 class MessageRepository(database: Database): ExposedRepository<Message, Long, Messages>(database, Messages) {
+
+    override val tableWithJoins: ColumnSet
+        get() = Messages.innerJoin(Users)
+
     override fun rowToEntity(row: ResultRow): Message =
         Message(
             author = User(

@@ -1,10 +1,7 @@
 package ktor.chat.utils
 
 import androidx.compose.runtime.*
-import io.ktor.http.*
 import kotlinx.coroutines.launch
-import ktor.chat.client.ResponseFailureException
-import java.lang.Exception
 
 sealed interface Remote<T> {
     fun <S> map(mapping: (T) -> S): Remote<S>

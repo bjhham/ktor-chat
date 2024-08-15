@@ -9,8 +9,6 @@ ktor:
             - io.ktor.chat.UsersKt.usersModule
             - io.ktor.chat.MessagesKt.messagesModule
             - io.ktor.chat.RoomsKt.roomsModule
-    deployment:
-        port: 8080
 
 jwt:
     audience: audience
@@ -22,7 +20,7 @@ security:
 
 database:
     main:
-        url: "jdbc:h2:file:./db/db"
+        url: "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
         user: root
         driver: org.h2.Driver
         password: ""

@@ -23,7 +23,9 @@ fun Application.repositoriesModule() {
                 )
             }
             single<ObservableRepository<Message, Long>>(named("messages")) {
-                MessageRepository(database).observable()
+                MessageRepository(database).observable(onFailure = { e ->
+                    environment.log.error("Failed to subscribe to event", e)
+                })
             }
             single<Repository<Room, Long>>(named("rooms")) {
                 RoomRepository(database)

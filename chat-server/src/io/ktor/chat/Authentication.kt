@@ -27,10 +27,10 @@ fun Application.authModule() {
                 .build()
             verifier(verifier)
             validate { credential ->
-                credential["id"]
-                    ?.toLongOrNull()
-                    ?.let { users.get(it) }
-                    ?.let(::ChatPrincipal)
+                ChatPrincipal(
+                    credential["id"]?.toLongOrNull() ?: return@validate null,
+                    credential["name"] ?: return@validate null
+                )
             }
         }
     }
@@ -45,6 +45,7 @@ fun Application.authModule() {
                         .withAudience(audience)
                         .withIssuer(issuer)
                         .withClaim("id", user.id.toString())
+                        .withClaim("name", user.name)
                         .sign(hashAlgorithm)
                     call.respond(HttpStatusCode.OK, AuthenticationResponse(token, user))
                 } else {
@@ -66,9 +67,15 @@ fun Application.authModule() {
                     call.respond(HttpStatusCode.Created, createdUser)
                 }
             }
+            post("logout") {
+                // TODO token cache
+                call.respond(HttpStatusCode.OK)
+            }
         }
     }
 }
 
 @Serializable
-data class ChatPrincipal(val user: FullUser): Principal
+data class ChatPrincipal(val user: SimplifiedUser): Principal {
+    constructor(id: Long, name: String): this(SimplifiedUser(id, name))
+}

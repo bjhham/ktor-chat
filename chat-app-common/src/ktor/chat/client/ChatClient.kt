@@ -10,6 +10,7 @@ interface ChatClient :
 interface AuthClient {
     suspend fun login(server: String, email: String, password: String): AuthenticationResponse
     suspend fun register(server: String, email: String, name: String, password: String)
+    suspend fun logout(server: String)
 }
 
 interface ServerStatusClient {
@@ -19,6 +20,5 @@ interface ServerStatusClient {
 interface ChatRestClient {
     val rooms: Repository<Room, Long>
     val messages: ObservableRepository<Message, Long>
-    
     val users: ReadOnlyRepository<Named, Long>
 }

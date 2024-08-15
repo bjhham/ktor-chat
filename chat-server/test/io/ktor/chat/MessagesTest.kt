@@ -80,9 +80,7 @@ private fun Application.mockMessagesRepository() {
     koin {
         modules(module {
             single<ObservableRepository<Message, Long>>(named("messages")) {
-                ListRepository.create<Message> { e, id ->
-                    e.copy(id = id)
-                }.observable()
+                ListRepository.create<Message>().observable()
             }
         })
     }

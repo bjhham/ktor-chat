@@ -5,8 +5,8 @@ interface ObservableRepository<E: Identifiable<ID>, ID>: Repository<E, ID> {
     fun forget(observer: Observer<E>)
 }
 
-fun <E: Identifiable<ID>, ID> Repository<E, ID>.observable(): ObservableRepository<E, ID> =
-    WatchListObservableRepository(this)
+fun <E: Identifiable<ID>, ID> Repository<E, ID>.observable(onFailure: (Exception) -> Unit = {}): ObservableRepository<E, ID> =
+    WatchListObservableRepository(this, onFailure)
 
 typealias Observer<E> = suspend (ChangeType, E) -> Unit
 
@@ -16,12 +16,9 @@ enum class ChangeType {
     DELETE,
 }
 
-suspend fun <E> Observer<E>.create(e: E) = invoke(ChangeType.CREATE, e)
-suspend fun <E> Observer<E>.update(e: E) = invoke(ChangeType.UPDATE, e)
-suspend fun <E> Observer<E>.delete(e: E) = invoke(ChangeType.DELETE, e)
-
 internal class WatchListObservableRepository<E: Identifiable<ID>, ID>(
     private val delegate: Repository<E, ID>,
+    private val onFailure: (Exception) -> Unit,
 ): Repository<E, ID> by delegate, ObservableRepository<E, ID> {
 
     private val observers = mutableListOf<suspend (ChangeType, E) -> Unit>()
@@ -53,6 +50,19 @@ internal class WatchListObservableRepository<E: Identifiable<ID>, ID>(
             val e = get(id) ?: return
             for (observer in observers)
                 observer.delete(e)
+        }
+    }
+
+    private suspend fun Observer<E>.create(e: E) = tryObserve(this, ChangeType.CREATE, e)
+    private suspend fun Observer<E>.update(e: E) = tryObserve(this, ChangeType.UPDATE, e)
+    private suspend fun Observer<E>.delete(e: E) = tryObserve(this, ChangeType.DELETE, e)
+
+    private suspend fun tryObserve(observer: Observer<E>, changeType: ChangeType, e: E) {
+        try {
+            observer(changeType, e)
+        } catch (ex: Exception) {
+            onFailure(ex)
+            forget(observer)
         }
     }
 

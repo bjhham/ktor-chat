@@ -4,6 +4,5 @@ dependencies:
   - ../chat-app-common
   - $compose.desktop.currentOs
 
-
 settings:
   compose: enabled

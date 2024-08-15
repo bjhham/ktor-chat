@@ -6,12 +6,12 @@ import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 
 object Users : LongIdTable() {
     val name = varchar("name", length = 42)
-    val email = varchar("email", length = 128)
+    val email = varchar("email", length = 128).uniqueIndex()
     val password = varchar("password", length = 128)
 }
 
 object Rooms : LongIdTable() {
-    val name: Column<String> = varchar("name", length = 42)
+    val name: Column<String> = varchar("name", length = 42).uniqueIndex()
 }
 
 object Messages : LongIdTable() {

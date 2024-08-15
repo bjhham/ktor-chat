@@ -11,16 +11,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
-import ktor.chat.ChatViewModel
+import ktor.chat.vm.ChatViewModel
 import ktor.chat.components.ErrorText
-import java.awt.TextField
 
 @Composable
 fun LoginScreen(vm: ChatViewModel) {
     val coroutineScope = rememberCoroutineScope()
-    var server by remember { mutableStateOf("http://localhost:8080") }
+    var server by remember { vm.server }
     var serverAvailable by remember { mutableStateOf(false) }
     var email by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }

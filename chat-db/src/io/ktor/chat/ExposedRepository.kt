@@ -15,7 +15,7 @@ abstract class ExposedRepository<E: Identifiable<ID>, ID: Comparable<ID>, T: IdT
 ): Repository<E, ID> {
     override suspend fun get(id: ID): E? =
         withTransaction {
-            table.select { table.id eq id }
+            tableWithJoins.select { table.id eq id }
                 .map(::rowToEntity)
                 .singleOrNull()
         }
@@ -40,24 +40,26 @@ abstract class ExposedRepository<E: Identifiable<ID>, ID: Comparable<ID>, T: IdT
     
     override suspend fun list(query: Query): List<E> =
         withTransaction {
-            table.select(query)
+            tableWithJoins.select(query)
                 .map(::rowToEntity)
                 .toList()
         }
     
     private suspend fun <T> withTransaction(block: suspend () -> T): T =
         newSuspendedTransaction(Dispatchers.IO, database) { block() }
-    
+
+    protected open val tableWithJoins: ColumnSet get() = table
     protected abstract fun rowToEntity(row: ResultRow): E
     protected abstract fun assignColumns(e: E): T.(UpdateBuilder<*>) -> Unit
     protected abstract fun E.withId(id: ID): E
 
-    protected fun T.select(query: Query): org.jetbrains.exposed.sql.Query =
+    private fun ColumnSet.select(query: Query): org.jetbrains.exposed.sql.Query =
         when(query) {
             is Everything -> selectAll()
+            is Nothing -> select { Op.FALSE }
             is MapQuery -> select {
                 AndOp(query.entries.map { (key, values) ->
-                    val column = this@select[key]
+                    val column = table[key]
                     when(values.size) {
                         1 -> EqOp(column, column.wrap(values[0]))
                         else -> SingleValueInListOp(column, values.map { column.wrap(it) })

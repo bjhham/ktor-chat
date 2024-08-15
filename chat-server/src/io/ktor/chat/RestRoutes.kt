@@ -11,11 +11,12 @@ inline fun <reified E: Identifiable<Long>> Routing.restMethods(
     repository: Repository<E, Long>
 ) {
     get {
-        val query = MapQuery(call.queryParameters.toMap())
+        val query = MapQuery.of(call.queryParameters.toMap())
         call.respond(repository.list(query))
     }
     post {
-        call.respond(HttpStatusCode.Created, repository.create(call.receive()))
+        val newEntity = repository.create(call.receive())
+        call.respond(newEntity)
     }
     put("{id}") {
         val entity = call.receive<E>()

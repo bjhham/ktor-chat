@@ -88,9 +88,7 @@ private fun Application.mockUsersRepository() {
     koin {
         modules(module {
             single<Repository<FullUser, Long>>(named("users")) {
-                ListRepository.create { e, id ->
-                    e.copy(id = id)
-                }
+                ListRepository.create()
             }
         })
     }
