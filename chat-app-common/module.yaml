@@ -6,25 +6,26 @@ dependencies:
   - ../chat-core: exported
   - $compose.foundation: exported
   - $compose.material3: exported
+  - $compose.materialIconsExtended: exported
   - $compose.uiTooling: exported
-  - $libs.androidx.lifecycle.viewmodel.compose
-  - $libs.androidx.lifecycle.viewmodel.savedstate
-  - $libs.kotlinx.serialization.json
-  - $libs.kotlinx.coroutines
-  - $libs.kotlinx.datetime
-  - $libs.ktor.client.core
-  - $libs.ktor.client.cio
-  - $libs.ktor.client.content.negotiation
-  - $libs.ktor.client.logging
-  - $libs.ktor.json
-  - $libs.logback.classic
+  - $libs.androidx.lifecycle.viewmodel.compose: exported
+  - $libs.androidx.lifecycle.viewmodel.savedstate: exported
+  - $libs.kotlinx.serialization.json: exported
+  - $libs.kotlinx.coroutines: exported
+  - $libs.kotlinx.datetime: exported
+  - $libs.ktor.client.core: exported
+  - $libs.ktor.client.cio: exported
+  - $libs.ktor.client.content.negotiation: exported
+  - $libs.ktor.client.logging: exported
+  - $libs.ktor.json: exported
+  - $libs.logback.classic: exported
 
 dependencies@android:
   - androidx.activity:activity-compose:1.7.2: exported
   - androidx.appcompat:appcompat:1.6.1: exported
 
 test-dependencies:
-    - $libs.kotlinx.coroutines
+  - $libs.kotlinx.coroutines
 
 test-dependencies@jvm:
   - ../chat-server
@@ -38,6 +39,8 @@ test-dependencies@jvm:
   - $libs.ktor.server.content.negotiation
 
 settings:
+  android:
+    namespace: io.ktor.chat.app
   compose:
     enabled: true
   kotlin:

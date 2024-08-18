@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 fun MessageList(body: @Composable () -> Unit) {
     Column(modifier = Modifier.fillMaxSize(),
            verticalArrangement = Arrangement.Bottom,
-    ) {
+        ) {
         body()
     }
 }

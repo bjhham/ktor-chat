@@ -8,18 +8,6 @@ import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 
 @Composable
-fun AddRoomButton(onCreate: suspend (String) -> Unit) {
-    var openDialog by remember { mutableStateOf(false) }
-    
-    TextButton(onClick = { openDialog = true }) {
-        Text("+  New room")
-    }
-    
-    if (openDialog)
-        AddRoomDialog(onCreate) { openDialog = false }
-}
-
-@Composable
 fun AddRoomDialog(
     onCreate: suspend (String) -> Unit,
     onClose: () -> Unit

@@ -76,6 +76,6 @@ fun Application.authModule() {
 }
 
 @Serializable
-data class ChatPrincipal(val user: SimplifiedUser): Principal {
+data class ChatPrincipal(val user: User): Principal {
     constructor(id: Long, name: String): this(SimplifiedUser(id, name))
 }

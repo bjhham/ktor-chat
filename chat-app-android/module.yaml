@@ -1,7 +1,9 @@
 product: android/app
 
 dependencies:
-    - ../chat-app-common
+  - ../chat-app-common
 
 settings:
-  compose: enabled
+  android:
+    namespace: io.ktor.chat.app.android
+    compose: true

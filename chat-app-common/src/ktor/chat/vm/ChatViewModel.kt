@@ -22,6 +22,10 @@ class ChatViewModel(
     val token = mutableStateOf(token)
     val loggedInUser = mutableStateOf(loggedInUser)
     val room = mutableStateOf(room)
+    val screenSize = mutableStateOf(Pair(-1, -1))
+
+    val screenWidth get() = screenSize.value.first
+    val screenHeight get() = screenSize.value.second
     
     suspend fun login(server: String, email: String, password: String) {
         val authentication = client.login(server, email, password)

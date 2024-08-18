@@ -38,11 +38,6 @@ exposed-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", v
 h2 = { module = "com.h2database:h2", version.ref = "h2-version" }
 androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "android-lifecycle-version" }
 androidx-lifecycle-viewmodel-savedstate = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "android-lifecycle-version" }
-#androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "android-lifecycle-version" }
-#androidx-lifecycle-runtime = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-runtime", version.ref = "android-lifecycle-version" }
-#androidx-lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "android-lifecycle-version" }
-#androidx-lifecycle-viewmodel-ktx = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "android-lifecycle-version" }
-#androidx-lifecycle-livedata-ktx = { module = "org.jetbrains.androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "android-lifecycle-version" }
 
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor-version" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin-version" }
