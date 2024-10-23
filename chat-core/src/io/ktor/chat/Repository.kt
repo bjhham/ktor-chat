@@ -142,6 +142,7 @@ private fun <E : Any> findMember(eType: KClass<E>, key: String): KProperty1<E, *
     (eType.memberProperties.find { it.name == key }
         ?: throw IllegalArgumentException("Missing property: $key"))
 
+@Suppress("UNCHECKED_CAST")
 private fun <V> KProperty<V>.parseFunction(): (String) -> V {
     when(returnType) {
         String::class.createType() -> return { it as V }

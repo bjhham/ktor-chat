@@ -1,7 +1,7 @@
 product: jvm/app
 
 dependencies:
-  - ../chat-app-common
+  - ../chat-app
   - $compose.desktop.currentOs
 
 settings:
