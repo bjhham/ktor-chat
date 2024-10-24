@@ -17,7 +17,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
     Database.connect(
-        url = "jdbc:postgresql://db:5432/chat",
+        url = "jdbc:postgresql://host.docker.internal:5440/chat",
         user = "username",
         driver = "org.postgresql.Driver",
         password = "password",
