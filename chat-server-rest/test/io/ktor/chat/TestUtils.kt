@@ -71,9 +71,7 @@ fun ApplicationTestBuilder.configureYaml(yamlFile: String?) {
     if (yamlFile == null)
         return
     environment {
-        config = ApplicationConfig("application.yaml")
-        config = HoconConfigLoader().load("application.conf")!!
-        config = YamlConfig(yamlFile)!!
+        config = ApplicationConfig(yamlFile)
     }
 }
 
