@@ -22,6 +22,10 @@ services:
 #      POSTGRES_USER: "username"
 #      POSTGRES_DB: "test"
 #      POSTGRES_PASSWORD: "password"
+  admin:
+    image: ktor-docker-image:ktor-chat-admin
+    ports:
+      - "8081:8081"
   chat:
     image: ktor-docker-image:ktor-chat-rest
     ports:
