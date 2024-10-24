@@ -34,4 +34,15 @@ class MessageRepository(database: Database): ExposedRepository<Message, Long, Me
         it[modified] = e.modified
     }
 
+    override suspend fun list(query: Query): List<Message> {
+        return super.list(when(query) {
+            is MapQuery -> MapQuery.of(query.mapValues { (key, values) ->
+                when(key) {
+                    "room" -> values.map {  it.toString().toLong() }
+                    else -> values
+                }
+            })
+            else -> query
+        })
+    }
 }

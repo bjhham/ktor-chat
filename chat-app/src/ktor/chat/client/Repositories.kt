@@ -49,7 +49,9 @@ inline fun <reified E: Identifiable<ID>, ID> restRepository(
     private fun Query.toQueryString() =
         when(this) {
             is Everything, Nothing -> ""
-            is MapQuery -> '?' + parametersOf(this).formUrlEncode()
+            is MapQuery -> '?' + parametersOf(
+                mapValues { (_, values) -> values.map { it.toString() }  }
+            ).formUrlEncode()
         }
 
 

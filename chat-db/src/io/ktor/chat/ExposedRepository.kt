@@ -7,7 +7,6 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.ops.SingleValueInListOp
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import java.lang.IllegalArgumentException
 
 abstract class ExposedRepository<E: Identifiable<ID>, ID: Comparable<ID>, T: IdTable<ID>>(
     private val database: Database,
@@ -15,7 +14,7 @@ abstract class ExposedRepository<E: Identifiable<ID>, ID: Comparable<ID>, T: IdT
 ): Repository<E, ID> {
     override suspend fun get(id: ID): E? =
         withTransaction {
-            tableWithJoins.select { table.id eq id }
+            tableWithJoins.selectAll().where { table.id eq id }
                 .map(::rowToEntity)
                 .singleOrNull()
         }
@@ -56,8 +55,8 @@ abstract class ExposedRepository<E: Identifiable<ID>, ID: Comparable<ID>, T: IdT
     private fun ColumnSet.select(query: Query): org.jetbrains.exposed.sql.Query =
         when(query) {
             is Everything -> selectAll()
-            is Nothing -> select { Op.FALSE }
-            is MapQuery -> select {
+            is Nothing -> selectAll().where { Op.FALSE }
+            is MapQuery -> selectAll().where {
                 AndOp(query.entries.map { (key, values) ->
                     val column = table[key]
                     when(values.size) {

@@ -21,6 +21,7 @@ dependencies:
     - $libs.kotlinx.coroutines
     - $libs.logback.classic
     - $libs.h2
+    - $libs.postgresql
     - $libs.exposed
     - $libs.exposed.jdbc
 

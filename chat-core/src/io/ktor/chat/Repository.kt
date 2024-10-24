@@ -19,9 +19,9 @@ interface ReadOnlyRepository<out E: Identifiable<ID>, ID> {
 
 sealed interface Query
 
-class MapQuery private constructor(private val map: Map<String, List<String>>): Query, Map<String, List<String>> by map {
+class MapQuery private constructor(private val map: Map<String, List<Any>>): Query, Map<String, List<Any>> by map {
     companion object {
-        fun of(map: Map<String, List<String>>) =
+        fun of(map: Map<String, List<Any>>) =
             if (map.isEmpty()) Everything else MapQuery(map)
 
         operator fun invoke(builder: Builder.() -> Unit) =
@@ -29,7 +29,7 @@ class MapQuery private constructor(private val map: Map<String, List<String>>): 
     }
 
     class Builder {
-        private val map = mutableMapOf<String, List<String>>()
+        private val map = mutableMapOf<String, List<Any>>()
 
         operator fun set(key: String, value: List<Any>) {
             map[key] = value.map { it.toString() }
@@ -130,8 +130,8 @@ fun <E: Any> Query.toPredicate(eType: KClass<E>): (E) -> Boolean =
             val clauses: List<(E) -> Boolean> = entries.map { (key, values) ->
                 val property = findMember(eType, key)
                 val getter = property::get
-                val parseFunction = property.parseFunction()
-                val clause: (E) -> Boolean = { getter(it) in values.map(parseFunction) }
+                //val parseFunction = property.parseFunction()
+                val clause: (E) -> Boolean = { getter(it) in values }
                 clause
             }
             ({ clauses.all { clause -> clause(it) } })

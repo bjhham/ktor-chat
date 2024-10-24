@@ -23,8 +23,9 @@ with a mock environment, or with a server running.
 
 Here is a list of the commands for running each program:
 
-| application | main source                                         | gradle command                    |
-|-------------|-----------------------------------------------------|-----------------------------------|
-| server      | `chat-server/src/io/ktor/chat/Application.kt`       | `./gradlew :chat-server:run`      |
-| desktop app | `chat-app-desktop/src/main.kt`                      | `./gradlew :chat-app-desktop:run` |
-| android app | `chat-app-android/src/io/ktor/chat/MainActivity.kt` | `./gradlew :chat-app-android:run` |
+| application | main source                                         | gradle command                       |
+|-------------|-----------------------------------------------------|--------------------------------------|
+| server-rest | `chat-server/src/io/ktor/chat/Application.kt`       | `./gradlew :chat-server-rest:jvmRun` |
+| server-htmx | `chat-server/src/io/ktor/chat/Application.kt`       | `./gradlew :chat-server-htmx:jvmRun` |
+| desktop app | `chat-app-desktop/src/main.kt`                      | `./gradlew :chat-app-desktop:jvmRun` |
+| android app | `chat-app-android/src/io/ktor/chat/MainActivity.kt` | `./gradlew :chat-app-android:jvmRun` |
