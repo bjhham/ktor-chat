@@ -11,6 +11,7 @@ h2-version = "2.1.214"
 android-lifecycle-version = "2.8.0"
 kotlinx-html-version = "0.10.1"
 postgresql-jdbc = "42.5.0"
+shadow = "8.3.3"
 
 [libraries]
 koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin-version" }
@@ -51,3 +52,4 @@ kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor-version" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }

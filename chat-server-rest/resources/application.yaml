@@ -23,10 +23,10 @@ security:
 
 database:
     main:
-        url: "jdbc:postgresql://localhost/chat"
+        url: "jdbc:postgresql://db:5432/chat"
         user: username
         driver: org.postgresql.Driver
-        password: password123
+        password: password
     test:
         url: "jdbc:h2:file:./db/db"
         user: root
