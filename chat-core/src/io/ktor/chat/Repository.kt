@@ -130,8 +130,8 @@ fun <E: Any> Query.toPredicate(eType: KClass<E>): (E) -> Boolean =
             val clauses: List<(E) -> Boolean> = entries.map { (key, values) ->
                 val property = findMember(eType, key)
                 val getter = property::get
-                //val parseFunction = property.parseFunction()
-                val clause: (E) -> Boolean = { getter(it) in values }
+                val parseFunction = property.parseFunction()
+                val clause: (E) -> Boolean = { getter(it) in values.map { parseFunction(it.toString()) } }
                 clause
             }
             ({ clauses.all { clause -> clause(it) } })
