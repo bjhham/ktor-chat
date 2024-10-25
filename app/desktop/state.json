@@ -1,0 +1,1 @@
+{"server":"http://localhost:8080","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdWRpZW5jZSIsImlzcyI6Imlzc3VlciIsImlkIjoiMSIsIm5hbWUiOiJCb2IifQ.11kepz68h-5hOfFOWIXciQ8MDgud8H-3SFmCUg2rBCs","loggedInUser":{"type":"io.ktor.chat.FullUser","name":"Bob","email":"bob@mail.com","password":"iqZDIG0PHW6M6VvUQARZKouRWzwF/fTN3rlWbIpCh3A=","id":1},"room":{"name":"Lobby","id":1}}

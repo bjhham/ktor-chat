@@ -2,9 +2,8 @@ product:
     type: jvm/app
 
 dependencies:
-    - ../chat-core
-    - ../chat-db
-    - ../chat-server
+    - ../../core
+    - ../db
     - $libs.koin.ktor
     - $libs.koin.logger.slf4j
     - $libs.ktor.server.core
@@ -21,7 +20,6 @@ dependencies:
     - $libs.kotlinx.coroutines
     - $libs.logback.classic
     - $libs.h2
-    - $libs.postgresql
     - $libs.exposed
     - $libs.exposed.jdbc
 
@@ -29,9 +27,3 @@ test-dependencies:
     - $libs.ktor.server.test.host
     - $libs.kotlin.test.junit
     - $libs.ktor.client.content.negotiation
-
-settings:
-    jvm: 
-        mainClass: io.ktor.chat.ApplicationKt
-    kotlin:
-        serialization: json

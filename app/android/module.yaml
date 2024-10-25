@@ -1,7 +1,7 @@
 product: android/app
 
 dependencies:
-  - ../chat-app
+  - ../common
 
 settings:
   android:

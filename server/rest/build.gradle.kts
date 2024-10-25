@@ -1,5 +1,4 @@
 plugins {
-//    alias(libs.plugins.shadow)
     alias(libs.plugins.ktor)
 }
 
