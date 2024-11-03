@@ -28,7 +28,7 @@ test-dependencies:
   - $libs.kotlinx.coroutines
 
 test-dependencies@jvm:
-  - ../server/common
+  - ../../server/rest
   - $libs.ktor.server.test.host
   - $libs.ktor.server.core
   - $libs.ktor.server.auth

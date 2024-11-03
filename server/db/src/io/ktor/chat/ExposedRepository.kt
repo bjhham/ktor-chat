@@ -60,8 +60,8 @@ abstract class ExposedRepository<E: Identifiable<ID>, ID: Comparable<ID>, T: IdT
                 AndOp(query.entries.map { (key, values) ->
                     val column = table[key]
                     when(values.size) {
-                        1 -> EqOp(column, column.wrap(values[0]))
-                        else -> SingleValueInListOp(column, values.map { column.wrap(it) })
+                        1 -> EqOp(column, column.coerce(values[0]))
+                        else -> SingleValueInListOp(column, values.map { column.coerce(it) })
                     }
                 })
             }

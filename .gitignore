@@ -36,6 +36,6 @@ out/
 .vscode/
 
 ### Application artifacts ###
-chat-*/db
-chat-*/state.json
+server/h2
+state.json
 local.properties

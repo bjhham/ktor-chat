@@ -40,6 +40,9 @@ class MapQuery private constructor(private val map: Map<String, List<Any>>): Que
 
         fun build() = MapQuery(map)
     }
+
+    override fun toString(): String =
+        map.toString()
 }
 data object Everything: Query
 data object Nothing: Query

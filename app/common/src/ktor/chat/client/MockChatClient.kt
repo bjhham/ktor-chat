@@ -9,7 +9,8 @@ class MockChatClient(
     rootUser: FullUser = FullUser("Steve", "steve@mail.com", "kek"),
     lobby: Room = Room("lobby", id = 1)
 ): ChatClient {
-    
+    override suspend fun verify(): Boolean = true
+
     override suspend fun login(server: String, email: String, password: String): AuthenticationResponse =
         users.list().find {
             it.email == email && it.password == password
@@ -41,5 +42,5 @@ class MockChatClient(
             text = "Hello, World!"
         )
     ).observable()
-    
+    override val memberships: ObservableRepository<Membership, Long> = ListRepository.create<Membership>().observable()
 }

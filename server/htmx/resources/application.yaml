@@ -2,7 +2,7 @@ ktor:
     development: true
     application:
         modules:
-            - io.ktor.chat.ApplicationKt.rootModule
+            - io.ktor.chat.RootModuleKt.rootModule
             - io.ktor.chat.DatabasesKt.databaseModule
             - io.ktor.chat.RepositoriesKt.repositoriesModule
             - io.ktor.chat.AuthenticationKt.sessionCookieModule

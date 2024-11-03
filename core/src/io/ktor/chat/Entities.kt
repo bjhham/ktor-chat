@@ -47,3 +47,10 @@ data class Message(
     override val id: Long = 0,
     val modified: Instant? = null,
 ): Identifiable<Long>
+
+@Serializable
+data class Membership(
+    val room: Room,
+    val user: User,
+    override val id: Long = 0
+): Identifiable<Long>

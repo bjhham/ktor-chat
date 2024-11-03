@@ -1,27 +1,14 @@
 package ktor.chat.client
 
 import io.ktor.chat.*
-import kotlin.test.Test
-
-import io.ktor.client.*
-import io.ktor.client.plugins.*
-import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.application.*
-import io.ktor.server.auth.*
 import io.ktor.server.config.yaml.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.sse.*
-import io.ktor.client.request.*
-import io.ktor.http.*
 import io.ktor.server.testing.*
-import io.ktor.util.*
 import kotlinx.datetime.Clock
 import ktor.chat.client.HttpChatClient.Companion.configureForChat
-import kotlin.test.Ignore
+import kotlin.test.Test
 
 class HttpChatClientTest {
-    
-    @Ignore
+
     @Test
     fun endToEndTest() = testApplication {
         environment {
@@ -39,14 +26,12 @@ class HttpChatClientTest {
             register(serverUrl, testUser.email, testUser.name, testUser.password)
             testUser = login(serverUrl, testUser.email, testUser.password).user
             val room = rooms.create(Room("lobby"))
-            val message = messages.create(
-                Message(
-                    author = testUser,
-                    room = room.id,
-                    created = Clock.System.now(),
-                    text = "Hello, world!"
-                )
-            )
+            val message = messages.create(Message(
+                author = testUser,
+                room = room.id,
+                created = Clock.System.now(),
+                text = "Hello, world!"
+            ))
             messages.delete(message.id)
             rooms.delete(room.id)
         }

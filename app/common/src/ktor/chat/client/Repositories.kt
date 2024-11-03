@@ -32,7 +32,7 @@ inline fun <reified E: Identifiable<ID>, ID> restRepository(
         }.body()
 
     override suspend fun update(e: E) {
-        http().put(path) {
+        http().put("$path/${e.id}") {
             setBody(e)
         }
     }
@@ -65,14 +65,16 @@ inline fun <reified E : Identifiable<ID>, ID> observableRepository(
         val observers = mutableMapOf<Observer<E>, Job>()
 
         override fun onChange(observer: Observer<E>): Observer<E> {
-            observers[observer] = http().launch(Dispatchers.IO) {
-                http().sse("$path/changes") {
-                    incoming.cancellable().collect { event ->
-                        event.data?.let { data ->
-                            val (changeTypeName, entityJson) = data.split(" ", limit = 2)
-                            val changeType = ChangeType.valueOf(changeTypeName)
-                            val entity = Json.decodeFromString<E>(entityJson)
-                            observer(changeType, entity)
+            observers[observer] = http().run {
+                launch {
+                    sse("$path/changes") {
+                        incoming.collect { event ->
+                            event.data?.let { data ->
+                                val (changeTypeName, entityJson) = data.split(" ", limit = 2)
+                                val changeType = ChangeType.valueOf(changeTypeName)
+                                val entity = Json.decodeFromString<E>(entityJson)
+                                observer(changeType, entity)
+                            }
                         }
                     }
                 }
@@ -83,7 +85,6 @@ inline fun <reified E : Identifiable<ID>, ID> observableRepository(
         override fun forget(observer: Observer<E>) {
             observers.remove(observer)?.cancel()
         }
-
     }
 
 @Composable

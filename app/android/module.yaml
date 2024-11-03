@@ -6,4 +6,3 @@ dependencies:
 settings:
   android:
     namespace: io.ktor.chat.app.android
-    compose: true

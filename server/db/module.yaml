@@ -3,7 +3,7 @@ product:
     platforms: [jvm, android]
 
 dependencies:
-    - ../chat-core
+    - ../../core
     - $libs.exposed
     - $libs.exposed.datetime
     - $libs.h2

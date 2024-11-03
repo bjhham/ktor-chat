@@ -21,7 +21,7 @@ internal class WatchListObservableRepository<E: Identifiable<ID>, ID>(
     private val onFailure: (Exception) -> Unit,
 ): Repository<E, ID> by delegate, ObservableRepository<E, ID> {
 
-    private val observers = mutableListOf<suspend (ChangeType, E) -> Unit>()
+    private var observers = listOf<suspend (ChangeType, E) -> Unit>()
 
     override fun onChange(observer: Observer<E>): Observer<E> {
         observers += observer
@@ -29,7 +29,7 @@ internal class WatchListObservableRepository<E: Identifiable<ID>, ID>(
     }
 
     override fun forget(observer: Observer<E>) {
-        observers.remove(observer)
+        observers -= observer
     }
 
     override suspend fun create(e: E): E =
@@ -46,8 +46,8 @@ internal class WatchListObservableRepository<E: Identifiable<ID>, ID>(
     }
 
     override suspend fun delete(id: ID) {
+        val e = get(id) ?: return
         delegate.delete(id).also {
-            val e = get(id) ?: return
             for (observer in observers)
                 observer.delete(e)
         }

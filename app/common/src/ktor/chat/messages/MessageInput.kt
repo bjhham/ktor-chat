@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material3.*
@@ -18,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
 @Composable
-fun MessageInput(send: suspend (String) -> Unit) {
+fun MessageInput(modifier: Modifier = Modifier, send: suspend (String) -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     var message by remember { mutableStateOf("") }
     
@@ -33,30 +34,27 @@ fun MessageInput(send: suspend (String) -> Unit) {
     
     Spacer(Modifier.height(10.dp))
 
-    Box {
-        TextField(
-            value = message,
-            placeholder = { Text("Type a message...") },
-            onValueChange = { message = it },
-            modifier = Modifier.fillMaxWidth().onKeyEvent { e ->
-                when (e.key.keyCode) {
-                    Key.Enter.keyCode -> {
-                        if (!e.isShiftPressed)
-                            sendMessage()
-                        true
-                    }
-                    else -> false
+    TextField(
+        value = message,
+        placeholder = { Text("Type a message...") },
+        onValueChange = { message = it },
+        modifier = modifier.fillMaxWidth().onKeyEvent { e ->
+            when (e.key.keyCode) {
+                Key.Enter.keyCode -> {
+                    if (!e.isShiftPressed)
+                        sendMessage()
+                    true
                 }
+                else -> false
             }
-        )
-        IconButton(
-            onClick = { sendMessage() },
-            modifier = Modifier.align(Alignment.CenterEnd)
-        ) {
-            Icon(
-                Icons.AutoMirrored.Rounded.Send,
-                contentDescription = "Send message"
-            )
+        },
+        trailingIcon = {
+            IconButton(onClick = { sendMessage() }) {
+                Icon(
+                    Icons.AutoMirrored.Rounded.Send,
+                    contentDescription = "Send message"
+                )
+            }
         }
-    }
+    )
 }

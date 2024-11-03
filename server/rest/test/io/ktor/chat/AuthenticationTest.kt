@@ -74,6 +74,7 @@ class AuthenticationTest {
     private fun authenticationTest(block: suspend ApplicationTestBuilder.() -> Unit) =
         testApplicationWith(
             Application::rootModule,
+            Application::restModule,
             Application::mockUsersRepository,
             Application::authModule,
             Application::usersModule,

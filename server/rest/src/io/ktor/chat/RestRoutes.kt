@@ -26,12 +26,14 @@ inline fun <reified E: Identifiable<Long>> Route.restMutations(
     put("{id}") {
         val entity = call.receive<E>()
         repository.update(entity)
-        call.respond(HttpStatusCode.Accepted)
+
+        call.respond(HttpStatusCode.NoContent)
     }
     delete("{id}") {
         val id = call.parameters["id"]?.toLongOrNull()
             ?: throw NotFoundException()
         repository.delete(id)
-        call.respond(HttpStatusCode.Accepted)
+
+        call.respond(HttpStatusCode.NoContent)
     }
 }

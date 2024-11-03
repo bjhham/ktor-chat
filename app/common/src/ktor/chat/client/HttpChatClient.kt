@@ -3,6 +3,7 @@ package ktor.chat.client
 import io.ktor.chat.*
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.sse.*
@@ -17,10 +18,10 @@ import io.ktor.serialization.kotlinx.json.*
  * TODO handle unauthenticated responses
  */
 class HttpChatClient(
-    private var http: HttpClient = HttpClient().configureForChat(server = null, token = null)
+    private var http: HttpClient = HttpClient(CIO).configureForChat(server = null, token = null)
 ): ChatClient {
 
-    constructor(server: String?, token: String?): this(HttpClient().configureForChat(server, token))
+    constructor(server: String?, token: String?): this(HttpClient(CIO).configureForChat(server, token))
 
     companion object {
         /**
@@ -46,7 +47,11 @@ class HttpChatClient(
             }
         }
     }
-    
+
+    override suspend fun verify(): Boolean {
+        return http.get("/auth/verify").status.isSuccess()
+    }
+
     override suspend fun login(server: String, email: String, password: String): AuthenticationResponse {
         val authentication = http.post("$server/auth/login") {
             setBody(LoginRequest(email, password))
@@ -69,7 +74,7 @@ class HttpChatClient(
 
     override suspend fun logout(server: String) {
         http.post("$server/auth/logout")
-        http = http.configureForChat(server, token = null)
+        http = HttpClient(CIO).configureForChat(server, token = null)
     }
 
     override suspend fun isServerAvailable(server: String): Boolean =
@@ -79,12 +84,13 @@ class HttpChatClient(
                     response.bodyAsText() == "pong"
                 else false
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             false
         }
 
     override val rooms: Repository<Room, Long> get() = restRepository({ http }, "rooms")
     override val messages: ObservableRepository<Message, Long> get() = observableRepository({ http }, "messages")
     override val users: ReadOnlyRepository<SimplifiedUser, Long> get() = restRepository({ http }, "users")
+    override val memberships: ObservableRepository<Membership, Long> get() = observableRepository({ http }, "memberships")
 }
 

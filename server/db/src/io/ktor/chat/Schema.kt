@@ -2,6 +2,7 @@ package io.ktor.chat
 
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 
 object Users : LongIdTable() {
@@ -15,9 +16,14 @@ object Rooms : LongIdTable() {
 }
 
 object Messages : LongIdTable() {
-    val author = reference("author", Users)
+    val author = reference("author", Users, onDelete = ReferenceOption.CASCADE)
     val created = timestamp("created")
-    val room = long("room").references(Rooms.id)
+    val room = long("room").references(Rooms.id, onDelete = ReferenceOption.CASCADE)
     val text = text("text")
     val modified = timestamp("modified").nullable()
+}
+
+object Members : LongIdTable() {
+    val user = reference("user", Users, onDelete = ReferenceOption.CASCADE)
+    val room = reference("room", Rooms, onDelete = ReferenceOption.CASCADE)
 }

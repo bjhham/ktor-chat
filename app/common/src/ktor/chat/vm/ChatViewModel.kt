@@ -12,7 +12,7 @@ class ChatViewModel(
     server: String,
     token: String?,
     loggedInUser: User?,
-    room: Room?,
+    room: Membership?,
     private val client: ChatClient = HttpChatClient(
         server = server,
         token = token,
@@ -24,9 +24,14 @@ class ChatViewModel(
     val room = mutableStateOf(room)
     val screenSize = mutableStateOf(Pair(-1, -1))
 
-    val screenWidth get() = screenSize.value.first
-    val screenHeight get() = screenSize.value.second
-    
+    suspend fun verify(): Boolean =
+        try {
+            client.verify()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+
     suspend fun login(server: String, email: String, password: String) {
         val authentication = client.login(server, email, password)
 
@@ -43,6 +48,7 @@ class ChatViewModel(
     suspend fun logout() {
         loggedInUser.value = null
         token.value = null
+        room.value = null
         client.logout(server.value)
     }
 

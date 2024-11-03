@@ -1,19 +1,23 @@
 package ktor.chat.utils
 
 import androidx.compose.runtime.*
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.statement.bodyAsText
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 sealed interface Remote<T> {
     fun <S> map(mapping: (T) -> S): Remote<S>
 }
+sealed interface RemoteResult<T>: Remote<T>
 
 class Loading<T>: Remote<T> {
     override fun <S> map(mapping: (T) -> S): Remote<S> = Loading()
 }
-data class Error<T>(val message: String): Remote<T> {
+data class Error<T>(val message: String): RemoteResult<T> {
     override fun <S> map(mapping: (T) -> S): Remote<S> = Error(message)
 }
-data class Done<T>(val value: T): Remote<T> {
+data class Done<T>(val value: T): RemoteResult<T> {
     override fun <S> map(mapping: (T) -> S): Remote<S> = Done(mapping(value))
 }
 
@@ -33,4 +37,22 @@ inline fun <T> load(vararg keys: Any, crossinline fetch: suspend () -> T): State
     }
     
     return result
+}
+
+fun CoroutineScope.tryRequest(
+    loading: MutableState<Boolean> = mutableStateOf(false),
+    onError: (String) -> Unit = { println(it) },
+    request: suspend () -> Unit
+) = launch {
+    loading.value = true
+    try {
+        request()
+    } catch (e: ClientRequestException) {
+        onError("${e.response.status}: ${e.response.bodyAsText()}")
+    } catch (e: Exception) {
+        e.printStackTrace()
+        onError(e.message ?: "Unexpected error: ${e::class.simpleName}")
+    } finally {
+        loading.value = false
+    }
 }

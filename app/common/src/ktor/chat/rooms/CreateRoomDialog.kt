@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 
 @Composable
-fun AddRoomDialog(
+fun CreateRoomDialog(
     onCreate: suspend (String) -> Unit,
     onClose: () -> Unit
 ) {

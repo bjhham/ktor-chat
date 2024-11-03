@@ -1,7 +1,8 @@
 ktor:
     application:
         modules:
-            - io.ktor.chat.ApplicationKt.rootModule
+            - io.ktor.chat.RootModuleKt.rootModule
+            - io.ktor.chat.RestModuleKt.restModule
             - io.ktor.chat.HealthCheckKt.healthCheckModule
             - io.ktor.chat.DatabasesKt.databaseModule
             - io.ktor.chat.RepositoriesKt.repositoriesModule
@@ -9,6 +10,7 @@ ktor:
             - io.ktor.chat.UsersKt.usersModule
             - io.ktor.chat.MessagesKt.messagesModule
             - io.ktor.chat.RoomsKt.roomsModule
+            - io.ktor.chat.MembershipsKt.membersModule
 
 jwt:
     audience: audience
@@ -19,7 +21,7 @@ security:
     secret: S3crE4_P@55w0Rd
 
 database:
-    main:
+    test:
         url: "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
         user: root
         driver: org.h2.Driver

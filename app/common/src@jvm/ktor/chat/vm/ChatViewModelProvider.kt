@@ -23,8 +23,13 @@ import kotlin.io.path.outputStream
 @Composable
 actual fun createViewModel(): ChatViewModel {
     val storageFile = Paths.get("state.json")
-    val stored: StoredStateModel? = storageFile.takeIf { it.exists() }?.inputStream()?.use { input ->
-        Json.decodeFromStream(input)
+    val stored: StoredStateModel? = try {
+        storageFile.takeIf { it.exists() }?.inputStream()?.use { input ->
+            Json.decodeFromStream(input)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
     }
     return viewModel {
         ChatViewModel(
@@ -34,6 +39,9 @@ actual fun createViewModel(): ChatViewModel {
             stored?.room,
         )
     }.apply {
+        LaunchedEffect(Unit) {
+            if (!verify()) logout()
+        }
         LaunchedEffect(server.value, token.value, loggedInUser.value, room.value) {
             saveFile(storageFile, toStorageModel())
         }
@@ -64,5 +72,5 @@ data class StoredStateModel(
     val server: String,
     val token: String?,
     val loggedInUser: User?,
-    val room: Room?,
+    val room: Membership?,
 )

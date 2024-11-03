@@ -8,12 +8,9 @@ ktor:
             - io.ktor.chat.DatabasesKt.databaseModule
             - io.ktor.chat.RepositoriesKt.repositoriesModule
             - io.ktor.chat.AuthenticationKt.authModule
-            - io.ktor.chat.UsersKt.usersModule
-            - io.ktor.chat.MessagesKt.messagesModule
-            - io.ktor.chat.RoomsKt.roomsModule
-            - io.ktor.chat.MembershipsKt.membersModule
+            - io.ktor.chat.AdminKt.adminModule
     deployment:
-        port: 8080
+        port: 8081
 
 jwt:
     audience: audience

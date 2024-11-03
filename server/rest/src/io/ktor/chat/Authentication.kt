@@ -6,6 +6,7 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
+import io.ktor.server.plugins.BadRequestException
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -70,6 +71,13 @@ fun Application.authModule() {
             post("logout") {
                 // TODO token cache
                 call.respond(HttpStatusCode.OK)
+            }
+            authenticate {
+                get("verify") {
+                    val userId = call.principal<ChatPrincipal>()?.user?.id ?: throw BadRequestException("No ID in credentials")
+                    val user = users.get(userId) ?: throw BadRequestException("No user found for $userId")
+                    call.respondText("Welcome back, ${user.name}", status = HttpStatusCode.OK)
+                }
             }
         }
     }

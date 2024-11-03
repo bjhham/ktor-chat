@@ -24,11 +24,18 @@ fun Application.repositoriesModule() {
             }
             single<ObservableRepository<Message, Long>>(named("messages")) {
                 MessageRepository(database).observable(onFailure = { e ->
+                    // TODO cancel SSE
                     environment.log.error("Failed to subscribe to event", e)
                 })
             }
             single<Repository<Room, Long>>(named("rooms")) {
                 RoomRepository(database)
+            }
+            single<ObservableRepository<Membership, Long>>(named("members")) {
+                MemberRepository(database).observable(onFailure = { e ->
+                    // TODO cancel SSE
+                    environment.log.error("Failed to subscribe to event", e)
+                })
             }
         })
     }

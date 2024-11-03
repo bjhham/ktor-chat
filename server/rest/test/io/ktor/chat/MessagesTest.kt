@@ -19,6 +19,7 @@ class MessagesTest {
     @Test
     fun `CRUD endpoints happy path`() = testApplicationWith(
         Application::rootModule,
+        Application::restModule,
         Application::mockAuth,
         Application::mockMessagesRepository,
         Application::messagesModule,
@@ -57,7 +58,7 @@ class MessagesTest {
             
             val updatedMessage = expectedMessage.copy(text = "Brave New World!")
             put("/messages/1") { setBody(updatedMessage)}.apply {
-                assertEquals(HttpStatusCode.Accepted, status)
+                assertEquals(HttpStatusCode.NoContent, status)
             }
             get("/messages").apply {
                 assertEquals(HttpStatusCode.OK, status)
@@ -65,7 +66,7 @@ class MessagesTest {
             }
             
             delete("/messages/1").apply {
-                assertEquals(HttpStatusCode.Accepted, status)
+                assertEquals(HttpStatusCode.NoContent, status)
             }
             get("/messages").apply {
                 assertEquals(HttpStatusCode.OK, status)
