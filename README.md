@@ -32,3 +32,9 @@ Here is a list of the commands for running each program:
 | server-htmx | `server/htmx/src/io/ktor/chat/Application.kt`  | `./gradlew :server:htmx:run`    |
 | desktop app | `app/desktop/src/main.kt`                      | `./gradlew :app:desktop:jvmRun` |
 | android app | `app/android/src/io/ktor/chat/MainActivity.kt` | `./gradlew :app:android:jvmRun` |
+
+And if you'd like to run everything in a docker environment:
+
+```bash
+docker compose up
+```
