@@ -1,0 +1,8 @@
+product: jvm/app
+
+dependencies:
+  - ../common
+  - $compose.desktop.currentOs
+
+settings:
+  compose: enabled

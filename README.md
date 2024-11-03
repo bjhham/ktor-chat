@@ -7,14 +7,17 @@ Koin, and other bleeding-edge Kotlin libraries.
 
 The project consists of the following six amper modules:
 
-| module                               | description                                                  |
-|--------------------------------------|--------------------------------------------------------------|
-| [chat-core](chat-core)               | domain data objects, interfaces, and exceptions              |
-| [chat-db](chat-db)                   | exposed database schema types and repository implementations |
-| [chat-server](chat-server)           | ktor server implementation                                   |
-| [chat-app-common](chat-app-common)   | shared front-end code                                        |
-| [chat-app-android](chat-app-android) | android front-end application                                |
-| [chat-app-desktop](chat-app-desktop) | jvm desktop front-end application                            |
+| module                         | description                                                  |
+|--------------------------------|--------------------------------------------------------------|
+| [core](core)                   | domain data objects, interfaces, and exceptions              |
+| [server/db](server/db)         | exposed database schema types and repository implementations |
+| [server/common](server/common) | common server functionality                                  |
+| [server/rest](server/rest)     | ktor server REST implementation                              |
+| [server/htmx](server/htmx)     | HTMX server implementation                                   |
+| [server/admin](server/admin)   | admin service for making sensitive changes                   |
+| [app/common](app/common)       | shared front-end application code                            |
+| [app/android](app/android)     | android front-end application                                |
+| [app/desktop](app/desktop)     | jvm desktop front-end application                            |
 
 ### Running
 
@@ -23,8 +26,9 @@ with a mock environment, or with a server running.
 
 Here is a list of the commands for running each program:
 
-| application | main source                                         | gradle command                    |
-|-------------|-----------------------------------------------------|-----------------------------------|
-| server      | `chat-server/src/io/ktor/chat/Application.kt`       | `./gradlew :chat-server:run`      |
-| desktop app | `chat-app-desktop/src/main.kt`                      | `./gradlew :chat-app-desktop:run` |
-| android app | `chat-app-android/src/io/ktor/chat/MainActivity.kt` | `./gradlew :chat-app-android:run` |
+| application | main source                                         | gradle command                       |
+|-------------|-----------------------------------------------------|--------------------------------------|
+| server-rest | `server/rest/src/io/ktor/chat/Application.kt`       | `./gradlew :chat-server-rest:run`    |
+| server-htmx | `chat-server/src/io/ktor/chat/Application.kt`       | `./gradlew :chat-server-htmx:run`    |
+| desktop app | `chat-app-desktop/src/main.kt`                      | `./gradlew :chat-app-desktop:jvmRun` |
+| android app | `chat-app-android/src/io/ktor/chat/MainActivity.kt` | `./gradlew :chat-app-android:jvmRun` |

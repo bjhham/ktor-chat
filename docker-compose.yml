@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    ports:
+      - "5440:5432"
+    environment:
+      - 'POSTGRES_USER=username'
+      - 'POSTGRES_DB=chat'
+      - 'POSTGRES_PASSWORD=password'
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8085:8080"
+  chat:
+    image: ktor-docker-image:ktor-chat-rest
+    ports:
+      - "8080:8080"
+  admin:
+    image: ktor-docker-image:ktor-chat-admin
+    ports:
+      - "8081:8081"
