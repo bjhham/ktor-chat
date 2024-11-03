@@ -7,7 +7,7 @@ import ktor.chat.vm.ChatViewModel
 import ktor.chat.vm.createViewModel
 
 @Composable
-fun ChatApplication(vm: ChatViewModel) {
+fun ChatApplication(vm: ChatViewModel = createViewModel()) {
     val loggedInUser by vm.loggedInUser
     var screenSize by remember { vm.screenSize }
 

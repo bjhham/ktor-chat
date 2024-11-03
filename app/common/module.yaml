@@ -16,9 +16,7 @@ dependencies:
   - $libs.ktor.client.core: exported
   - $libs.ktor.client.cio: exported
   - $libs.ktor.client.content.negotiation: exported
-  - $libs.ktor.client.logging: exported
   - $libs.ktor.json: exported
-  - $libs.logback.classic: exported
 
 dependencies@android:
   - androidx.activity:activity-compose:1.7.2: exported
@@ -39,8 +37,6 @@ test-dependencies@jvm:
   - $libs.ktor.server.content.negotiation
 
 settings:
-  android:
-    namespace: io.ktor.chat.app
   compose:
     enabled: true
   kotlin:
