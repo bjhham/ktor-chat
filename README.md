@@ -27,11 +27,11 @@ Below is a diagram of how the modules depend on one another:
 ```mermaid
 mindmap
   root((core))
-    client
+    id(client)
       app
         desktop
         android
-    server
+    id(server)
       rest
       htmx
       admin
