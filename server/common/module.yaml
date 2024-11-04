@@ -1,5 +1,6 @@
 product:
-    type: jvm/app
+    type: lib
+    platforms: [jvm]
 
 dependencies:
     - ../../core

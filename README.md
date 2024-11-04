@@ -3,7 +3,7 @@
 This project provides a full example of a full-stack Ktor application using Compose Multi-platform, Amper, Exposed, 
 Koin, and other bleeding-edge Kotlin libraries.
 
-### Project Structure
+## Project Structure
 
 The project consists of the following six amper modules:
 
@@ -15,11 +15,12 @@ The project consists of the following six amper modules:
 | [server/rest](server/rest)     | ktor server REST implementation                              |
 | [server/htmx](server/htmx)     | HTMX server implementation                                   |
 | [server/admin](server/admin)   | admin service for making sensitive changes                   |
+| [client](client)               | common client library for interacting with the back-end      |
 | [app/common](app/common)       | shared front-end application code                            |
 | [app/android](app/android)     | android front-end application                                |
 | [app/desktop](app/desktop)     | jvm desktop front-end application                            |
 
-### Running
+## Running
 
 There are multiple chat client implementations under `./chat-app-*` that can be executed independently 
 with a mock environment, or with a server running.
@@ -33,8 +34,15 @@ Here is a list of the commands for running each program:
 | desktop app | `app/desktop/src/main.kt`                      | `./gradlew :app:desktop:jvmRun` |
 | android app | `app/android/src/io/ktor/chat/MainActivity.kt` | `./gradlew :app:android:jvmRun` |
 
-And if you'd like to run everything in a docker environment:
+### With Docker
 
+If you'd like to run everything in a containerized environment:
+
+Firstly, publish images locally using:
+ - `./gradlew :server:rest:publishImageToLocalRegistry`
+ - `./gradlew :server:admin:publishImageToLocalRegistry`
+
+Now, you can run docker compose:
 ```bash
 docker compose up
 ```

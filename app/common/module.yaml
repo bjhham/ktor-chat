@@ -3,38 +3,17 @@ product:
     platforms: [jvm, android]
 
 dependencies:
-  - ../../core: exported
+  - ../../client: exported
   - $compose.foundation: exported
   - $compose.material3: exported
   - $compose.materialIconsExtended: exported
   - $compose.uiTooling: exported
   - $libs.androidx.lifecycle.viewmodel.compose: exported
   - $libs.androidx.lifecycle.viewmodel.savedstate: exported
-  - $libs.kotlinx.serialization.json: exported
-  - $libs.kotlinx.coroutines: exported
-  - $libs.kotlinx.datetime: exported
-  - $libs.ktor.client.core: exported
-  - $libs.ktor.client.cio: exported
-  - $libs.ktor.client.content.negotiation: exported
-  - $libs.ktor.json: exported
 
 dependencies@android:
   - androidx.activity:activity-compose:1.7.2: exported
   - androidx.appcompat:appcompat:1.6.1: exported
-
-test-dependencies:
-  - $libs.kotlinx.coroutines
-
-test-dependencies@jvm:
-  - ../../server/rest
-  - $libs.ktor.server.test.host
-  - $libs.ktor.server.core
-  - $libs.ktor.server.auth
-  - $libs.ktor.server.auth.jwt
-  - $libs.ktor.json
-  - $libs.ktor.server.sse
-  - $libs.ktor.server.config.yaml
-  - $libs.ktor.server.content.negotiation
 
 settings:
   compose:

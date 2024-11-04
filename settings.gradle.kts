@@ -17,14 +17,16 @@ plugins {
 
 include(":core")
 
-include(":app")
-include(":app:common")
-include(":app:desktop")
-include(":app:android")
-
 include(":server")
 include(":server:db")
 include(":server:common")
 include(":server:rest")
 include(":server:admin")
 include(":server:htmx")
+
+include(":client")
+
+include(":app")
+include(":app:common")
+include(":app:desktop")
+include(":app:android")
