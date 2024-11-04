@@ -27,15 +27,18 @@ Below is a diagram of how the modules depend on one another:
 ```mermaid
 mindmap
   root((core))
-    client
+    id(client)
+    ::icon(fa fa-mobile-alt)
       app
         desktop
         android
-    server
+    id(server)
+    ::icon(fa fa-server)
       rest
       htmx
       admin
     db
+    ::icon(fa fa-database)
 ```
 
 Note, "common" module is implied for the server and app modules here.
