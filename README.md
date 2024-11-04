@@ -20,6 +20,26 @@ The project consists of the following amper modules:
 | [app / android](app/android)     | android front-end application                                |
 | [app / desktop](app/desktop)     | jvm desktop front-end application                            |
 
+The dependencies of the modules flow towards the domain module: [core](core).
+
+Below is a diagram of how the modules depend on one another:
+
+```mermaid
+mindmap
+  root((core))
+    client
+      app
+        desktop
+        android
+    server
+      rest
+      htmx
+      admin
+    db
+```
+
+Note, "common" module is implied for the server and app modules here.
+
 ## Running
 
 There are multiple chat client implementations under `./chat-app-*` that can be executed independently 
