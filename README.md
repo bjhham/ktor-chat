@@ -34,8 +34,8 @@ mindmap
       rest
       htmx
       admin
-    client
-    db
+    id{{client}}
+    id{{db}}
 ```
 
 Note, "common" module is implied for the server and app modules here.
