@@ -27,14 +27,14 @@ Below is a diagram of how the modules depend on one another:
 ```mermaid
 mindmap
   root((core))
-    id(client)
-      app
-        desktop
-        android
+    id(app)
+      desktop
+      android
     id(server)
       rest
       htmx
       admin
+    client
     db
 ```
 
