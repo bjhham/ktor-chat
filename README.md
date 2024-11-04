@@ -5,20 +5,20 @@ Koin, and other bleeding-edge Kotlin libraries.
 
 ## Project Structure
 
-The project consists of the following six amper modules:
+The project consists of the following amper modules:
 
-| module                         | description                                                  |
-|--------------------------------|--------------------------------------------------------------|
-| [core](core)                   | domain data objects, interfaces, and exceptions              |
-| [server/db](server/db)         | exposed database schema types and repository implementations |
-| [server/common](server/common) | common server functionality                                  |
-| [server/rest](server/rest)     | ktor server REST implementation                              |
-| [server/htmx](server/htmx)     | HTMX server implementation                                   |
-| [server/admin](server/admin)   | admin service for making sensitive changes                   |
-| [client](client)               | common client library for interacting with the back-end      |
-| [app/common](app/common)       | shared front-end application code                            |
-| [app/android](app/android)     | android front-end application                                |
-| [app/desktop](app/desktop)     | jvm desktop front-end application                            |
+| module                           | description                                                  |
+|----------------------------------|--------------------------------------------------------------|
+| [core](core)                     | domain data objects, interfaces, and exceptions              |
+| [server / db](server/db)         | exposed database schema types and repository implementations |
+| [server / common](server/common) | common server functionality                                  |
+| [server / rest](server/rest)     | ktor server REST implementation                              |
+| [server / htmx](server/htmx)     | HTMX server implementation                                   |
+| [server / admin](server/admin)   | admin service for making sensitive changes                   |
+| [client](client)                 | common client library for interacting with the back-end      |
+| [app / common](app/common)       | shared front-end application code                            |
+| [app / android](app/android)     | android front-end application                                |
+| [app / desktop](app/desktop)     | jvm desktop front-end application                            |
 
 ## Running
 
