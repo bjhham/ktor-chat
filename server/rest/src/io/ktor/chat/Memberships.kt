@@ -1,15 +1,14 @@
 package io.ktor.chat
 
+import io.ktor.di.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.plugins.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.koin.core.qualifier.named
-import org.koin.ktor.ext.inject
 
 fun Application.membersModule() {
-    val memberships by inject<ObservableRepository<Membership, Long>>(named("members"))
+    val memberships: ObservableRepository<Membership, Long> by dependencies
 
     routing {
         authenticate {

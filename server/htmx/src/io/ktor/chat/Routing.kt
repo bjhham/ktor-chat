@@ -6,17 +6,16 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
+import io.ktor.di.*
 import kotlinx.datetime.Clock
-import org.koin.core.qualifier.named
-import org.koin.ktor.ext.inject
 
 val admin = User(1, "admin")
 
 fun Application.routingModule() {
-    val users by inject<Repository<FullUser, Long>>(named("users"))
-    val rooms by inject<Repository<Message, Long>>(named("rooms"))
-    val messages by inject<ObservableRepository<Message, Long>>(named("messages"))
-    val hashAlgorithm by inject<Algorithm>(named("hash"))
+    val users: Repository<FullUser, Long> by dependencies
+    val rooms: Repository<Message, Long> by dependencies
+    val messages: ObservableRepository<Message, Long> by dependencies
+    val hashAlgorithm: Algorithm by dependencies.named("hash")
 
     routing {
         // main chat view

@@ -3,14 +3,12 @@ package io.ktor.chat
 import io.ktor.client.call.*
 import io.ktor.client.plugins.sse.*
 import io.ktor.client.request.*
+import io.ktor.di.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
-import org.koin.core.qualifier.named
-import org.koin.dsl.module
-import org.koin.ktor.plugin.koin
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -78,11 +76,9 @@ class MessagesTest {
 }
 
 private fun Application.mockMessagesRepository() {
-    koin {
-        modules(module {
-            single<ObservableRepository<Message, Long>>(named("messages")) {
-                ListRepository.create<Message>().observable()
-            }
-        })
+    dependencies {
+        provide<ObservableRepository<Message, Long>> {
+            ListRepository.create<Message>().observable()
+        }
     }
 }

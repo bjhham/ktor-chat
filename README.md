@@ -1,7 +1,7 @@
 # Ktor Chat
 
 This project provides a full example of a full-stack Ktor application using Compose Multi-platform, Amper, Exposed, 
-Koin, and other bleeding-edge Kotlin libraries.
+dependency injection, and other bleeding-edge Kotlin libraries.
 
 ## Project Structure
 

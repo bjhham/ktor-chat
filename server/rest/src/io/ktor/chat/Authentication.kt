@@ -2,6 +2,9 @@ package io.ktor.chat
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import io.ktor.di.dependencies
+import io.ktor.di.getValue
+import io.ktor.di.named
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -11,12 +14,10 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
-import org.koin.core.qualifier.named
-import org.koin.ktor.ext.inject
 
 fun Application.authModule() {
-    val users by inject<Repository<FullUser, Long>>(named("users"))
-    val hashAlgorithm by inject<Algorithm>(named("hash"))
+    val users: Repository<FullUser, Long> by dependencies
+    val hashAlgorithm: Algorithm by dependencies.named("hash")
     val audience = property("jwt.audience")
     val issuer = property("jwt.issuer")
 

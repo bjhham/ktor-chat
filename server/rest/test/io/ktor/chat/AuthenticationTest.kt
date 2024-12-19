@@ -5,13 +5,11 @@ import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.di.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.testing.*
-import org.koin.core.qualifier.named
-import org.koin.dsl.module
-import org.koin.ktor.plugin.koin
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -86,11 +84,9 @@ class AuthenticationTest {
 }
 
 private fun Application.mockUsersRepository() {
-    koin {
-        modules(module {
-            single<Repository<FullUser, Long>>(named("users")) {
-                ListRepository.create()
-            }
-        })
+    dependencies {
+        provide<Repository<FullUser, Long>> {
+            ListRepository.create()
+        }
     }
 }

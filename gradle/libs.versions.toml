@@ -2,7 +2,6 @@
 ktor-version = "3.0.0"
 kotlin-version = "2.0.20"
 logback-version = "1.4.14"
-koin-version = "3.5.6"
 kotlinx-datetime-version = "0.6.0"
 kotlinx-serialization-version = "1.7.1"
 kotlinx-coroutines-version = "1.9.0-RC.2"
@@ -14,8 +13,6 @@ postgresql-jdbc = "42.5.0"
 shadow = "8.3.3"
 
 [libraries]
-koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin-version" }
-koin-logger-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin-version" }
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor-version" }
 ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor-version" }
 ktor-server-config-yaml = { module = "io.ktor:ktor-server-config-yaml", version.ref = "ktor-version" }
