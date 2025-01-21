@@ -2,12 +2,16 @@ package io.ktor.chat
 
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.di.*
+import io.ktor.chat.KoinResolver
 import io.ktor.server.application.*
 import io.ktor.server.plugins.calllogging.*
 import io.ktor.server.request.*
+import org.koin.core.Koin
+import org.koin.core.qualifier.StringQualifier
 import org.koin.core.qualifier.named
 import org.koin.ktor.plugin.Koin
 import org.koin.dsl.module
+import org.koin.java.KoinJavaComponent.getKoin
 import org.koin.logger.slf4jLogger
 import org.slf4j.event.Level
 
@@ -33,7 +37,7 @@ fun Application.rootModule() {
         })
     }
     install(DI) {
-
+        resolver = KoinResolver(default, getKoin())
     }
     install(CallLogging) {
         level = Level.INFO
@@ -45,4 +49,13 @@ fun Application.rootModule() {
             "$status | ${timeTaken}ms | $httpMethod $uri"
         }
     }
+}
+
+class KoinResolver(
+    val base: DependencyRegistry,
+    private val koin: Koin,
+) : DependencyResolver by base {
+    override fun <T : Any> get(key: DependencyKey): T =
+        koin.getOrNull(key.type.type, key.name?.let(::StringQualifier))
+            ?: base.get(key)
 }
