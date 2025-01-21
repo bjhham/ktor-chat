@@ -4,11 +4,23 @@ import io.ktor.server.application.createApplicationPlugin
 import io.ktor.util.reflect.TypeInfo
 
 // TODO configure provider, resolver, etc.
-val DI = createApplicationPlugin(name = "DI") {
+val DI = createApplicationPlugin(name = "DI", ::DIConfig) {
     application.attributes.put(
         DependencyRegistryKey,
         DefaultDependencyRegistry(DependencyReflection.Default)
     )
+}
+
+class DIConfig {
+    /**
+     * Default implementation.
+     * Can be used for delegation or as a fallback.
+     */
+    val default: DependencyRegistry = DefaultDependencyRegistry(DependencyReflection.Default)
+
+    var reflection: DependencyReflection? = null
+    var provider: DependencyProvider? = null
+    var resolver: DependencyResolver? = null
 }
 
 /**
