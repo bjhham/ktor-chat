@@ -1,5 +1,6 @@
-package io.ktor.chat
+package io.ktor.chat.server
 
+import io.ktor.chat.*
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.serialization.kotlinx.json.*

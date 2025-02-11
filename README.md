@@ -7,6 +7,11 @@ A full-stack example application using:
 - Exposed 
 - Koin
 
+The features presented in the application include:
+- Real-time messaging
+- Chat room management
+- Authentication and user management
+
 ## Project Structure
 
 The project consists of the following amper modules:
@@ -50,11 +55,11 @@ with a mock environment, or with a server running.
 
 Here is a list of the commands for running each program:
 
-| application | main source                                    | gradle command                  |
-|-------------|------------------------------------------------|---------------------------------|
-| server-rest | `server/rest/src/io/ktor/chat/Application.kt`  | `./gradlew :server:rest:run`    |
-| desktop app | `app/desktop/src/main.kt`                      | `./gradlew :app:desktop:jvmRun` |
-| android app | `app/android/src/io/ktor/chat/MainActivity.kt` | `./gradlew :app:android:jvmRun` |
+| application | main source                       | gradle command                  |
+|-------------|-----------------------------------|---------------------------------|
+| server-rest | `server/rest/src/Application.kt`  | `./gradlew :server:rest:run`    |
+| desktop app | `app/desktop/src/main.kt`         | `./gradlew :app:desktop:jvmRun` |
+| android app | `app/android/src/MainActivity.kt` |                                 |
 
 ### With Docker
 

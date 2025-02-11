@@ -1,4 +1,4 @@
-package io.ktor.chat
+package io.ktor.chat.server
 
 import io.ktor.server.application.*
 import org.koin.ktor.plugin.Koin

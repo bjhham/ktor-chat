@@ -4,11 +4,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import io.ktor.chat.*
 import io.ktor.chat.Nothing
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.plugins.sse.*
-import io.ktor.client.request.*
-import io.ktor.http.*
 import ktor.chat.utils.Done
 import ktor.chat.utils.Remote
 import ktor.chat.utils.load

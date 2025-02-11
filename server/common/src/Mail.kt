@@ -1,5 +1,6 @@
-package io.ktor.chat
+package io.ktor.chat.server
 
+import io.ktor.chat.*
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.server.application.Application
 import io.ktor.server.application.log

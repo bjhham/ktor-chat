@@ -1,4 +1,4 @@
-package io.ktor.chat
+package io.ktor.chat.server
 
 import io.ktor.server.application.*
 import io.ktor.server.response.*

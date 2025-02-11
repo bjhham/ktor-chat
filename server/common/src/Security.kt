@@ -1,4 +1,4 @@
-package io.ktor.chat
+package io.ktor.chat.server
 
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.server.application.Application
