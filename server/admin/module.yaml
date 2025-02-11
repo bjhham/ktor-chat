@@ -33,6 +33,6 @@ test-dependencies:
 
 settings:
     jvm:
-        mainClass: io.ktor.chat.ApplicationKt
+        mainClass: io.ktor.chat.server.ApplicationKt
     kotlin:
         serialization: json

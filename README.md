@@ -21,7 +21,6 @@ The project consists of the following amper modules:
 | [core](core)                     | domain data objects, interfaces, and exceptions              |
 | [server / common](server/common) | common server functionality                                  |
 | [server / rest](server/rest)     | ktor server REST implementation                              |
-| [server / htmx](server/htmx)     | HTMX server implementation                                   |
 | [server / admin](server/admin)   | admin service for making sensitive changes                   |
 | [app / common](app/common)       | shared front-end application code                            |
 | [app / android](app/android)     | android front-end application                                |
@@ -73,3 +72,8 @@ Now, you can run docker compose:
 ```bash
 docker compose up
 ```
+
+## Screenshots
+
+![](docs/chat-desktop.png)
+![](docs/chat-phone.png)
