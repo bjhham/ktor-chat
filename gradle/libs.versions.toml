@@ -26,6 +26,7 @@ ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negoti
 ktor-server-html-builder = { module = "io.ktor:ktor-server-html-builder-jvm", version.ref = "ktor-version" }
 ktor-server-sessions = { module = "io.ktor:ktor-server-sessions", version.ref = "ktor-version" }
 ktor-server-sse = { module = "io.ktor:ktor-server-sse", version.ref = "ktor-version" }
+ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor-version" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-version" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-version" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }

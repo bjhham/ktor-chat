@@ -36,6 +36,6 @@ out/
 .vscode/
 
 ### Application artifacts ###
-server/h2
+h2
 state.json
 local.properties

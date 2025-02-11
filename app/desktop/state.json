@@ -1,1 +1,1 @@
-{"server":"http://localhost:8080","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdWRpZW5jZSIsImlzcyI6Imlzc3VlciIsImlkIjoiMSIsIm5hbWUiOiJCb2IifQ.11kepz68h-5hOfFOWIXciQ8MDgud8H-3SFmCUg2rBCs","loggedInUser":{"type":"io.ktor.chat.FullUser","name":"Bob","email":"bob@mail.com","password":"FnDEbY8Y1x8n3Q+OYDkf9SkqMqUGCUieWaf08DIutGs=","id":1},"room":{"room":{"name":"farts","id":1},"user":{"type":"io.ktor.chat.SimplifiedUser","id":1,"name":"Bob"},"id":1}}
+{"server":"http://localhost:8080","token":null,"loggedInUser":null,"room":null}

@@ -17,14 +17,14 @@ plugins {
 
 include(":core")
 
+include(":db")
+include(":client")
+
 include(":server")
-include(":server:db")
 include(":server:common")
 include(":server:rest")
 include(":server:admin")
-include(":server:htmx")
 
-include(":client")
 
 include(":app")
 include(":app:common")

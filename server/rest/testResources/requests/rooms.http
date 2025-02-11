@@ -1,7 +1,0 @@
-POST http://localhost:8080/rooms
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdWRpZW5jZSIsImlzcyI6Imlzc3VlciIsImlkIjoiMSJ9.Edw5GhRMRIV3VW59TOqYa1ek8v_867yEq5FvX2xwV1A
-Content-Type: application/json
-
-{
-  "name": "lobby"
-}

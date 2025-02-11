@@ -3,8 +3,8 @@ product:
 
 dependencies:
     - ../../core
+    - ../../db
     - ../common
-    - ../db
     - ../rest
     - $libs.koin.ktor
     - $libs.koin.logger.slf4j
