@@ -11,15 +11,21 @@ class MockChatClient(
 ): ChatClient {
     override suspend fun verify(): Boolean = true
 
-    override suspend fun login(server: String, email: String, password: String): AuthenticationResponse =
+    override suspend fun login(server: String, email: String, password: String): LoginResponse =
         users.list().find {
             it.email == email && it.password == password
         }?.let {
-            AuthenticationResponse("abc123def456", it)
+            LoginResponse("abc123def456", it)
         } ?: throw IllegalAccessException()
 
-    override suspend fun register(server: String, email: String, name: String, password: String) {
-        users.create(FullUser(name, email, password))
+    override suspend fun register(server: String, email: String, name: String, password: String): RegistrationResponse {
+        val user = FullUser(name, email, password)
+        users.create(user)
+        return RegistrationResponse("abc123def456", user, "123456")
+    }
+
+    override suspend fun confirm(code: String) {
+        // success always
     }
 
     override suspend fun isServerAvailable(server: String): Boolean = true

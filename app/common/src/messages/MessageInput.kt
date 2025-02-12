@@ -1,35 +1,48 @@
 package ktor.chat.messages
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Send
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.NativeKeyEvent
 import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
+import ktor.chat.utils.insert
+import ktor.chat.utils.tryRequest
 
 @Composable
 fun MessageInput(modifier: Modifier = Modifier, send: suspend (String) -> Unit) {
     val coroutineScope = rememberCoroutineScope()
-    var message by remember { mutableStateOf("") }
-    
-    // TODO loading feedback
-    fun sendMessage() {
-        val messageToSend = message
-        coroutineScope.launch {
+    var message by remember { mutableStateOf(TextFieldValue("")) }
+    val loading = remember { mutableStateOf(false) }
+
+    // TODO handle errors
+    fun sendMessage(): Boolean {
+        if (message.text.isBlank()) return true
+        val messageToSend = message.text.trim().also {
+            message = TextFieldValue("")
+        }
+        coroutineScope.tryRequest(loading) {
             send(messageToSend.trim())
         }
-        message = ""
+        return true
     }
     
     Spacer(Modifier.height(10.dp))
@@ -38,14 +51,15 @@ fun MessageInput(modifier: Modifier = Modifier, send: suspend (String) -> Unit) 
         value = message,
         placeholder = { Text("Type a message...") },
         onValueChange = { message = it },
-        modifier = modifier.fillMaxWidth().onKeyEvent { e ->
-            when (e.key.keyCode) {
-                Key.Enter.keyCode -> {
-                    if (!e.isShiftPressed)
-                        sendMessage()
-                    true
+        modifier = modifier.fillMaxWidth().onPreviewKeyEvent { e ->
+            if (e.key != Key.Enter) false
+            else {
+                if (!e.isShiftPressed) {
+                    sendMessage()
+                } else if (e.type == KeyEventType.KeyDown) {
+                    message = message.insert("\n")
                 }
-                else -> false
+                true
             }
         },
         trailingIcon = {

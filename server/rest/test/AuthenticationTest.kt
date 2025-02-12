@@ -30,16 +30,26 @@ class AuthenticationTest {
                 contentType(ContentType.Application.Json)
             }
         }.apply {
-            post("/auth/register") {
+            // User is registered
+            val registrationResponse = post("/auth/register") {
                 setBody(RegistrationRequest(
                     "Joey Bloggs",
                     "joey@example.com",
                     "password123",
                 ))
             }.apply {
-                assertEquals(HttpStatusCode.Created, status)
+                assertEquals(HttpStatusCode.OK, status)
+            }.body<RegistrationResponse>()
+
+            // Confirmation code works
+            post("/auth/confirm") {
+                header(HttpHeaders.Authorization, "Bearer ${registrationResponse.token}")
+                setBody(ConfirmationRequest(registrationResponse.code))
+            }.apply {
+                assertEquals(HttpStatusCode.NoContent, status)
             }
 
+            // User can log in
             val authResponse = post("/auth/login") {
                 setBody(LoginRequest(
                     "joey@example.com",
@@ -47,8 +57,9 @@ class AuthenticationTest {
                 ))
             }.apply {
                 assertEquals(HttpStatusCode.OK, status)
-            }.body<AuthenticationResponse>()
+            }.body<LoginResponse>()
 
+            // And find themselves from the list endpoint
             get("/users") {
                 header(HttpHeaders.Authorization, "Bearer ${authResponse.token}")
             }.apply {
@@ -79,6 +90,7 @@ class AuthenticationTest {
             application {
                 root()
                 security()
+                mail()
                 rest()
                 mockUsersRepository()
                 auth()

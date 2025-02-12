@@ -48,9 +48,8 @@ fun CoroutineScope.tryRequest(
     try {
         request()
     } catch (e: ClientRequestException) {
-        onError("${e.response.status}: ${e.response.bodyAsText()}")
+        onError(e.response.bodyAsText())
     } catch (e: Exception) {
-        e.printStackTrace()
         onError(e.message ?: "Unexpected error: ${e::class.simpleName}")
     } finally {
         loading.value = false

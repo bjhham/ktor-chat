@@ -52,12 +52,12 @@ class HttpChatClient(
         return http.get("/auth/verify").status.isSuccess()
     }
 
-    override suspend fun login(server: String, email: String, password: String): AuthenticationResponse {
+    override suspend fun login(server: String, email: String, password: String): LoginResponse {
         val authentication = http.post("$server/auth/login") {
             setBody(LoginRequest(email, password))
-        }.body<AuthenticationResponse>()
-        
-        http = http.configureForChat(server, authentication.token)
+        }.body<LoginResponse>()
+
+        http = HttpClient(CIO).configureForChat(server, authentication.token)
         return authentication
     }
     
@@ -66,9 +66,18 @@ class HttpChatClient(
         email: String,
         name: String,
         password: String
-    ) {
-        http.post("$server/auth/register") {
+    ): RegistrationResponse {
+        val registration = http.post("$server/auth/register") {
             setBody(RegistrationRequest(name, email, password))
+        }.body<RegistrationResponse>()
+
+        http = HttpClient(CIO).configureForChat(server, registration.token)
+        return registration
+    }
+
+    override suspend fun confirm(code: String) {
+        http.post("/auth/confirm") {
+            setBody(ConfirmationRequest(code))
         }
     }
 

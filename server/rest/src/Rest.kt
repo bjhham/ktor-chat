@@ -12,21 +12,27 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sse.*
 import io.ktor.util.*
-import java.sql.SQLIntegrityConstraintViolationException
 
 fun Application.rest() {
     install(ContentNegotiation) {
         json()
     }
     install(StatusPages) {
-        exception<SQLIntegrityConstraintViolationException> { call, ex ->
-            call.respond(HttpStatusCode.Conflict, ex.message ?: "")
+        exception<ConflictingArgumentException> { call, ex ->
+            call.respondText(ContentType.Text.Plain, HttpStatusCode.Conflict) {
+                ex.message ?: "Duplicate value!"
+            }
         }
         exception<IllegalArgumentException> { call, ex ->
-            call.respond(HttpStatusCode.BadRequest, ex.message ?: "")
+            call.respondText(ContentType.Text.Plain, HttpStatusCode.BadRequest) {
+                ex.message ?: "Bad input!"
+            }
         }
         exception<Exception> { call, ex ->
-            call.respond(HttpStatusCode.InternalServerError, ex.message ?: "")
+            this@rest.environment.log.error("Internal server error, returning 500", ex)
+            call.respondText(ContentType.Text.Plain, HttpStatusCode.InternalServerError) {
+                "Internal error!"
+            }
         }
     }
     install(SSE)

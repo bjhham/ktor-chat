@@ -2,18 +2,23 @@ package ktor.chat
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.layout.Layout
+import ktor.chat.login.ConfirmationScreen
 import ktor.chat.login.LoginScreen
 import ktor.chat.vm.ChatViewModel
+import ktor.chat.vm.Confirmation
 import ktor.chat.vm.createViewModel
 
 @Composable
 fun ChatApplication(vm: ChatViewModel = createViewModel()) {
     val loggedInUser by vm.loggedInUser
+    val confirmation by vm.confirmation
     var screenSize by remember { vm.screenSize }
 
     Layout(
         content = {
-            if (loggedInUser == null)
+            if (confirmation is Confirmation.Pending)
+                ConfirmationScreen(vm)
+            else if (loggedInUser == null)
                 LoginScreen(vm)
             else
                 ChatScreen(vm)

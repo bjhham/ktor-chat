@@ -9,8 +9,9 @@ interface ChatClient :
 
 interface AuthClient {
     suspend fun verify(): Boolean
-    suspend fun login(server: String, email: String, password: String): AuthenticationResponse
-    suspend fun register(server: String, email: String, name: String, password: String)
+    suspend fun login(server: String, email: String, password: String): LoginResponse
+    suspend fun register(server: String, email: String, name: String, password: String): RegistrationResponse
+    suspend fun confirm(code: String)
     suspend fun logout(server: String)
 }
 

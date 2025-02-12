@@ -21,6 +21,11 @@ class ChatViewModel(
     val server = mutableStateOf(server)
     val token = mutableStateOf(token)
     val loggedInUser = mutableStateOf(loggedInUser)
+    val confirmation = mutableStateOf(
+        if (loggedInUser == null)
+            Confirmation.Unauthenticated
+        else Confirmation.Confirmed
+    )
     val room = mutableStateOf(room)
     val screenSize = mutableStateOf(Pair(-1, -1))
 
@@ -41,15 +46,30 @@ class ChatViewModel(
     }
     
     suspend fun register(server: String, email: String, name: String, password: String) {
-        client.register(server, email, name, password)
-        // TODO do stuff
+        val response = client.register(server, email, name, password)
+
+        this.server.value = server
+        this.token.value = response.token
+        this.loggedInUser.value = response.user
+        this.confirmation.value = Confirmation.Pending(response.code ?: "")
+    }
+
+    suspend fun confirm(code: String) {
+        client.confirm(code)
+        confirmation.value = Confirmation.Confirmed
     }
 
     suspend fun logout() {
         loggedInUser.value = null
         token.value = null
         room.value = null
+        confirmation.value = Confirmation.Unauthenticated
         client.logout(server.value)
     }
+}
 
+sealed interface Confirmation {
+    data object Unauthenticated: Confirmation
+    data class Pending(val code: String): Confirmation
+    data object Confirmed: Confirmation
 }

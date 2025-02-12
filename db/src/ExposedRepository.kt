@@ -45,7 +45,13 @@ abstract class ExposedRepository<E: Identifiable<ID>, ID: Comparable<ID>, T: IdT
         }
     
     private suspend fun <T> withTransaction(block: suspend () -> T): T =
-        newSuspendedTransaction(Dispatchers.IO, database) { block() }
+        try {
+            newSuspendedTransaction(Dispatchers.IO, database) {
+                block()
+            }
+        } catch (e: java.sql.SQLIntegrityConstraintViolationException) {
+            throw ConflictingArgumentException(cause = e)
+        }
 
     protected open val tableWithJoins: ColumnSet get() = table
     protected abstract fun rowToEntity(row: ResultRow): E

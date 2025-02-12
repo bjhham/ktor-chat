@@ -37,7 +37,13 @@ fun LoginScreen(vm: ChatViewModel) {
     var loadingState = remember { mutableStateOf(false) }
     var loading by loadingState
     var tabIndex by remember { mutableStateOf(0) }
-    
+    val scrollState = rememberScrollState()
+    var isFullyScrolled by remember { mutableStateOf(false) }
+
+    LaunchedEffect(scrollState.value, scrollState.maxValue) {
+        isFullyScrolled = scrollState.value >= (scrollState.maxValue - 10)
+    }
+
     LaunchedEffect(server) {
         while(true) {
             serverAvailable = vm.isServerAvailable(server)
@@ -65,27 +71,16 @@ fun LoginScreen(vm: ChatViewModel) {
         }
     }
     
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Spacer(Modifier.height(30.dp))
-        Text(
-            "KTOR CHAT",
-            fontSize = 36.sp,
-            fontWeight = FontWeight.ExtraBold,
-            letterSpacing = 20.sp,
-            textAlign = TextAlign.Center,
-        )
-        Spacer(Modifier.height(30.dp))
-        Column(Modifier.width(420.dp), verticalArrangement = Arrangement.spacedBy(24.dp)) {
+    WelcomeView {
+        FormColumn {
             TabRow(selectedTabIndex = tabIndex) {
                 Tab(text = { Text("Login") }, selected = tabIndex == 0, onClick = { tabIndex = 0 })
                 Tab(text = { Text("Register") }, selected = tabIndex == 1, onClick = { tabIndex = 1 })
             }
-            Column(Modifier.fillMaxWidth().height(225.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(24.dp)) {
-                
+            Column(
+                Modifier.fillMaxWidth().height(225.dp).verticalScroll(scrollState),
+                verticalArrangement = Arrangement.spacedBy(24.dp)
+            ) {
                 TextField(
                     server,
                     { server = it },
@@ -144,28 +139,49 @@ fun LoginScreen(vm: ChatViewModel) {
                             Text("Repeat password")
                         }
                     )
-                }            
+                }
             }
             
             error?.let {
                 ErrorText(it, modifier = Modifier.align(Alignment.End))
             }
-            
-            when(tabIndex) {
-                0 -> Button(
-                    ::login,
-                    modifier = Modifier.align(Alignment.End),
-                    enabled = !loading && sequenceOf(server, email, password).all { it.isNotBlank() }
-                ) {
-                    Text(if (loading) "Submitting..." else "Login")
+
+            if (isFullyScrolled) {
+                when (tabIndex) {
+                    0 -> Button(
+                        ::login,
+                        modifier = Modifier.align(Alignment.End),
+                        enabled = !loading && sequenceOf(server, email, password).all { it.isNotBlank() }
+                    ) {
+                        Text(if (loading) "Submitting..." else "Login")
+                    }
+
+                    1 -> Button(
+                        ::register,
+                        modifier = Modifier.align(Alignment.End),
+                        enabled = !loading && sequenceOf(
+                            server,
+                            email,
+                            name,
+                            password,
+                            passwordRepeat
+                        ).all { it.isNotBlank() }
+                    ) {
+                        Text(if (loading) "Submitting..." else "Register")
+                    }
                 }
-                1 -> Button(
-                    ::register,
-                    modifier = Modifier.align(Alignment.End),
-                    enabled = !loading && sequenceOf(server, email, name, password, passwordRepeat).all { it.isNotBlank() }
+            } else {
+                Button(
+                    onClick = {
+                        coroutineScope.launch {
+                            scrollState.animateScrollTo(scrollState.maxValue)
+                        }
+                    },
+                    modifier = Modifier.align(Alignment.End)
                 ) {
-                    Text(if (loading) "Submitting..." else "Register")
+                    Text("More...")
                 }
+
             }
         }
     }
